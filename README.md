@@ -61,9 +61,9 @@ graph TB
 - 📡 **Fetch API** - HTTP 통신
 
 ### **AI & Backend Services**
-- 🧠 **K-Intelligence API** - 문서/이미지 처리, 질문 생성
-- 🤖 **AI Models API** - 요약, Intent 분류, 채팅
-- 💬 **FAQ Answer API** - FAQ 답변 생성
+- 🧠 **믿:음 2.0 Base** - FAQ 질문 생성
+- 🤖 **믿:음 2.0 Base** - 요약, Intent 분류, 채팅
+- 💬 **믿:음 2.0 Base** - FAQ 답변 생성
 - 🔄 **Proxy Middleware** - API 라우팅
 
 ### **Development**
@@ -184,16 +184,14 @@ src/
 
 ### **HomePage** 
 - 📁 파일 업로드 인터페이스
-- 🌐 URL 입력 및 크롤링
+- 🌐 URL 입력 및 검색
 - ✍️ 텍스트 직접 입력
 - 🎯 샘플 파일 제공
-- ⚡ 실시간 처리 상태 표시
 
 ### **DetailPage**
 - 📝 생성된 FAQ 표시
 - 📋 문서 요약 뷰어
-- 💬 스마트 채팅 인터페이스
-- 🔎 문서 내 검색 기능
+- 💬 채팅 인터페이스
 
 ## 🌟 특장점
 
@@ -213,29 +211,12 @@ src/
 - 직관적인 드래그 앤 드롭 인터페이스
 - 실시간 피드백 및 진행률 표시
 
-## 🤝 기여하기
-
-1. Fork 프로젝트
-2. Feature 브랜치 생성 (`git checkout -b feature/AmazingFeature`)
-3. 변경사항 커밋 (`git commit -m 'Add some AmazingFeature'`)
-4. 브랜치에 Push (`git push origin feature/AmazingFeature`)
-5. Pull Request 생성
-
-## 📄 라이선스
-
-이 프로젝트는 MIT 라이선스 하에 배포됩니다. 자세한 내용은 `LICENSE` 파일을 참조하세요.
-
-## 📞 문의
-
-- 📧 **Email**: [문의 이메일]
-- 🐙 **GitHub**: [https://github.com/muniv/g](https://github.com/muniv/g)
-- 📝 **Issues**: [GitHub Issues](https://github.com/muniv/g/issues)
 
 ---
 
 <div align="center">
 
-### 🎉 **공고쉽과 함께 스마트한 문서 분석을 경험해보세요!**
+### 🎉 **공고쉽과 함께 공고 AI 분석을 경험해보세요!**
 
 [![GitHub stars](https://img.shields.io/github/stars/muniv/g?style=social)](https://github.com/muniv/g/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/muniv/g?style=social)](https://github.com/muniv/g/network/members)
