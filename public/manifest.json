@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "공고쉽",
+  "name": "공고쉽 - 공고 AI 분석",
   "icons": [
     {
       "src": "favicon.ico",
