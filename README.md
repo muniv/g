@@ -1,224 +1,213 @@
-# 🚀 공고쉽 (GongoShip)
-> **AI 기반 문서 분석 및 FAQ 자동 생성 플랫폼**
-
-[![Demo Video](https://img.shields.io/badge/🎬-시연영상_곧_공개-ff6b6b?style=for-the-badge)](https://github.com/muniv/g)
-[![React](https://img.shields.io/badge/React-18.0-61dafb?style=flat-square&logo=react)](https://reactjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178c6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
-[![AI Powered](https://img.shields.io/badge/AI-Powered-00d4aa?style=flat-square&logo=openai)](https://github.com/muniv/g)
-
-## 📺 시연 영상
-> **🎬 곧 공개됩니다! 공고쉽의 모든 기능을 확인해보세요.**
+# YoutubeMonitoring (유튜브 모니터링) dev
 
 ---
 
-## ✨ 주요 기능
+## 개요
+특정 배치 시간마다 설정한 검색어의 유튜브 영상을 수집하고, 수집된 영상의 개수와 각 자막을 이용한 분석 결과를 제공주는 API입니다.
 
-### 🔍 **다양한 문서 처리**
-- 📄 **PDF, HWP, Word** 문서 업로드 및 분석
-- 🖼️ **이미지** 업로드 및 텍스트 추출
-- 🌐 **웹 링크** 자동 크롤링 및 분석
-- ✍️ **직접 텍스트** 입력 분석
+## 이미지 빌드 및 컨테이너 생성
+프로젝트 폴더 내의 'Dockerfile'을 이용해 이미지 빌드를 수행할 수 있습니다.<br/>
+Dockerfile 내에 api 실행 명령어까지 작성해 두었습니다.
 
-### 🤖 **AI 기반 자동화**
-- 📝 **FAQ 자동 생성** - 문서 내용 기반 질문 자동 생성
-- 📋 **문서 요약** - 긴 문서를 핵심 내용으로 압축
-- 💬 **스마트 채팅** - Intent 분류 기반 맞춤형 답변
-- 🔎 **문서 검색** - 업로드된 문서 내 키워드 검색
-
-### 🎨 **사용자 친화적 UI**
-- 🌈 **직관적인 인터페이스** - 쉽고 빠른 문서 업로드
-- 📱 **반응형 디자인** - 모바일/데스크톱 최적화
-- ⚡ **실시간 처리 상태** - 진행률 표시 및 로딩 애니메이션
-- 🎯 **원클릭 샘플** - 빠른 테스트를 위한 샘플 파일 제공
-
-## 🏗️ 아키텍처
-
-```mermaid
-graph TB
-    A[React Frontend] --> B[API Gateway]
-    B --> C[K-Intelligence API:51037]
-    B --> D[AI Models API:51036]
-    B --> E[FAQ Answer API:51038]
-    
-    C --> F[Document Parser]
-    C --> G[Image OCR]
-    C --> H[Question Generator]
-    
-    D --> I[Summarization]
-    D --> J[Intent Classification]
-    D --> K[Chat Model]
-    
-    E --> L[FAQ Answer Model]
+(1) 이미지 빌드 
+build 명령어 실행
+```sh
+docker build --tag <image_name> .
 ```
 
-## 🛠️ 기술 스택
-
-### **Frontend**
-- ⚛️ **React** 18.0 - 컴포넌트 기반 UI
-- 🔷 **TypeScript** - 타입 안전성 보장
-- 🎨 **CSS3** - 커스텀 스타일링
-- 🚦 **React Router** - SPA 라우팅
-- 📡 **Fetch API** - HTTP 통신
-
-### **AI & Backend Services**
-- 🧠 **믿:음 2.0 Base** - FAQ 질문 생성
-- 🤖 **믿:음 2.0 Base** - 요약, Intent 분류, 채팅
-- 💬 **믿:음 2.0 Base** - FAQ 답변 생성
-- 🔄 **Proxy Middleware** - API 라우팅
-
-### **Development**
-- 📦 **Create React App** - 빠른 개발 환경
-- 🔧 **ESLint** - 코드 품질 관리
-- 🎯 **Webpack** - 모듈 번들링
-
-## 🚀 시작하기
-
-### 📋 **사전 요구사항**
-- Node.js 16.0 이상
-- npm 또는 yarn
-- AI 서버들이 실행 중이어야 함
-
-### ⚡ **빠른 설치**
-
-```bash
-# 저장소 클론
-git clone https://github.com/muniv/g.git
-cd g
-
-# 의존성 설치
-npm install
-
-# 환경 변수 설정
-cp .env.example .env
-
-# 개발 서버 시작
-npm start
+(2) 컨테이너 생성 및 api 실행
+컨테이너 생성과 api 실행이 동시에 수행됩니다.
+```sh
+docker run --shm-size="128G" --memory="256G" --cpus=16 -p <port>:80  --name <container_name> -it <image_name>
 ```
 
-### 🔧 **환경 설정**
+## API 명세서
+실행되는 API의 request와 response입니다.
 
-#### **API 서버 설정**
-```bash
-# .env 파일 생성
-REACT_APP_KINTEL_API_URL=http://20.190.194.245:51037
-REACT_APP_MODELS_API_URL=http://20.190.194.245:51036
-REACT_APP_FAQ_API_URL=http://20.190.194.245:51038
+**endpoint 리스트**
+- http://`<host>`:`<port>`/youtube_monitoring/search
+  > 검색 엔드포인트  
+  > 특정 배치 시간에 호출되는 엔드포인트로 설정한 검색어를 기준으로 유튜브 영상을 수집해 반환합니다.
+  > 기존에 검색된 유튜브 영상 아이디를 입력 받아 중복을 제거해 반환합니다.
+- http://`<host>`:`<port>`/youtube_monitoring/script_video
+  > 스크립트 추출 엔드포인트  
+  > 유튜브 영상에 대한 스크립트를 추출해 반환합니다.
+- http://`<host>`:`<port>`/youtube_monitoring/analysis_video
+  > 영상 분석 엔드포인트
+  > 유튜브 영상 스크립트를 분석해 반환합니다.
+
+**검색 엔드포인트 Request**
+```sh
+curl -X 'POST' \
+  'http://<host>:<port>/youtube_monitoring/search' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "query_list": ["롯데", "미래"],
+    "batch_start_time": "2025-09-04 13:15:00",
+    "stored_video_dict": {"롯데": [{"video_id": "id-1"}, {"video_id": "id-2"}]}    
+  }'
+```
+- Parameters description
+    - `query_list (list[str])`: 검색어 리스트 
+    - `batch_start_time (str)`: 배치 시작 시간 ex) "yyyy-mm-dd hh:mm:ss"
+    - `stored_video_dict (dict[str, list])`: 검색된 유튜브 영상 중에 기존에 검색된 영상들을 필터링하기 위한 정보로 검검항목 DB에서 조회된 점검항목 데이터 중 'video_id' 컬럼 값
+
+**검색 엔드포인트 Response**
+```json
+{
+  "status": "succeess",
+  "msg": "success",
+  "data": {"롯데": [{"video_id": "id-1", "title": "롯데의 사업 무엇이 있을까?", "link": "www.youtube.com", "channel_title": "롯데 팬", "published_at": "2025-06-03 13:00:00", "view": 100, "description": "롯데의 사업은 완벽하다"}]},
+  "meta_data": "",
+  "elapsed_time": 432.2
+}
+```
+- Parameters description
+    - `query_list (list[str])`: 검색어 리스트 
+    - `batch_start_time (str)`: 배치 시작 시간 ex) "yyyy-mm-dd hh:mm:ss"
+    - `stored_video_dict (dict[str, list])`: 검색된 유튜브 영상 중에 기존에 검색된 영상들을 필터링하기 위한 정보로 검검항목 DB에서 조회된 점검항목 데이터 중 'video_id' 컬럼 값
+
+
+
+**(2) 스크립트 추출 엔드포인트**
+```sh
+curl -X 'POST' \
+  'http://<host>:<port>/youtube_monitoring/script_video' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "video_id": "id-1",
+  }'
+```
+- Parameters description
+    - `video_id (str)`: 스크립트를 추출할 비디오 ID
+
+**(3) 영상 분석 엔드포인트**
+```sh
+curl -X 'POST' \
+  'http://<host>:<port>/youtube_monitoring/analysis_video' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "transcript_content": {"timestemp_transcript": [{"text":"오늘은 어떤 슬라임을 만들어 볼까요?", "clip":{"start":0.16,"end":2.04},"duration":1.88}. {"text":"초코 슬라임이요", "clip":{"start":2.09,"end":2.12},"duration":3.21}],
+    "transcript": "오늘은 어떤 슬라임을 만들어 볼까요? 초코 슬라임이요"}
+  }'
+```
+- Parameters description
+    - `transcript_content (dict[str, Union[list, str]]))`: timestemp 정보(timestemp_transcript)와 영상 전체 스크립트(transcript)
+
+
+
+###########
+
+- request example
+: ./nlp_checkmate 위치에서 아래 curl 실행
+```sh
+curl -X 'POST' \
+  'http://<host>:<port>/checkmate/checkmate_model' \
+  -H 'Authorization: Bearer <auth_token>' \
+  -H 'Content-Type: application/json' \
+  -d @test_script/test_body.json
 ```
 
-#### **프록시 설정** (`src/setupProxy.js`)
-```javascript
-// 자동 설정됨 - 수정 불요
-// /api/kintel → localhost:51037
-// /api/models → localhost:51036
-// /api/models/faq_answer_model → localhost:51038
+- 🚨 request parameter 2.0 -> 3.0 변경 사항 (250619)
+  - 'set_id' -> 'criteria' 인자명 및 값 변경
+    > 기존에는 모델 API에서 'set_id' request 인자를 전달 받아 해당 id 값을 직접 점검항목 상세 조회 api(개발계: `https://aidev.lotte.net/api/v1/checklist?checkListId=<checklist_id>` / 운영계: `https://ai.lotte.net/api/v1/checklist?checkListId=<checklist_id>`)에 사용하여 criteria 데이터를 조회해 사용했습니다. 이번 업데이트에 모델 API에서 호출이 아니라 백엔드에서 데이터를 조회해 request parameter로 전달할 수 있도록 수정하였습니다. 위 api의 reponse 값을 그대로 criteria 인자 값으로 전달 주시면 됩니다.
+    > - 변경 전: 'set_id' 인자명과 값 전달 받음
+    > - 변경 후: 'criteria' 인자명 및 값 수정
+
+- 🚨 request parameter 2.0 -> 3.0 변경 사항 (250624)
+  - 'criteria' 값 변경
+    > 250619 버전에는 점검항목 상세 조회 api의 response 값 그대로 전달했습니다. 이번 업데이트에는 reponse 값 중 'data' 필드의 값을 그대로 criteria 인자 값으로 전달 주시면 됩니다.
+    > - 변경 전: 점검항목 상세 조회 api의 response 값 그대로 전달
+    > - 변경 후: reponse 값 중 'data' 필드의 값을 그대로 criteria 인자 값으로 전달
+
+- 🚨 request parameter 2.0 -> 3.0 변경 사항 (250708)
+  - 'criteria' 값 변경
+    > 250624 버전에는 점검항목 상세 조회 api의 response 값 중 'data' 필드의 값을 그대로 criteria 인자 값으로 전달헀습니다. 이번 업데이트에는 'data' 필드 값에서 'checkListId'와 'checkLists' 값만 전달 주시면 됩니다.
+    > - 변경 전: 점검항목 상세 조회 api의 response 값 중 'data' 필드의 값을 그대로 전달
+    > - 변경 후: 'data' 필드의 값에서 'checkListId'와 'checkLists' 값만 전달
+  - 'service_id' 값 추가
+    > 'serviece_id' 값 추가 
+    > - 변경 전: 'service_id' 인자 전달하지 않음
+    > - 변경 후: 'service_id' 인자 추가 전달
+
+- Parameters
+    - `document_content [list[dict]]`: 파싱 API 결과  
+        - `document_id [str]`: 문서 id (파싱 API Response 값)  
+        - `text [str]`: 파싱 결과 (파싱 API Response 값)  
+        - `type [str]`: 문서 확장자 (파싱 API Response 값)  
+        - `path [str]`: 문서 path (파싱 API Response 값)  
+    - `document_type [str]`: 입력 받은 파일의 확장자 (파싱 API Response 값 사용 가능)  
+    - `criteria [dict]`: 검검항목 DB에서 조회된 점검항목 데이터 중 'data' 필드 값
+    - `check_type [bool]`: 포함되어야 하는지 / 포함되면 안되는 지에 대한 값
+    - `num_return [int]`: 반환할 chunk의 개수 (현재 버전은 사용하기 않음)
+    - `service_id [str]`: azure 모델 전달을 위한 service_id
+
+
+**(3) response**
+```json
+{
+  "data": {"display_content_data": [{"page": "page 정보(pdf 외에는 None 값)", "chunk": "검출되지 않은 문구", "checklist_content": [], "reason": [],"detect": false, "chunk_idx": "0"},
+                                    {"page": "page 정보(pdf 외에는 None 값)", "chunk": "검출된 문구", "checklist_content": ["점검항목-2", "점검항목-1", "점검항목-9"], "reason": ["이유-2", "이유-1","이유-9"], "detect": true, "chunk_idx": "1"}],
+           "display_criteria_data": [("(1) 점검항목-1", null), ("(2) 점검항목-2", [{"chunk": "검출문구-1", "reason": "이유-1", "page": "page_num", "chunk_idx": "4"}])],
+           "content_position": {"0": "content_chunk=0", "1": "content_chunk-1"},
+           "content": "전체 문서 내용"},
+
+  "status": "succeess",
+  "msg": "success",
+  "elapsed_time": 432.2
+}
 ```
+- Parameters
+    - `data Optional[dict]`: 화면에 노출될 두 가지 정보(content 중심, checklist 중심), 전체 content, position이 매핑되어 있는 content
+        - `display_content_data [list[dict]]`: content 중심 추론 결과 
+          - `page Optional[int]`: 페이지 정보 (pdf 외에 다른 확장자는 None)
+          - `chunk [str]`: 문구 텍스트
+          - `checklist_content [list]`: 매핑된 점검항목 리스트
+          - `reason [list]`: 점검항목이 매핑된 이유 리스트
+          - `detect [bool]`: 일반 문구인지, 검출된 문구인지의 논리 값
+          - `chunk_idx [str]`: content_position과 매핑된 chunk 위치 id
+        - `display_criteria_data [list[tuple]]`: checklist 중심 추론 결과 
+          - `점검항목`: 점검항목 내용
+          - `chunk_info [Optional[list[dict]]]`: 해당 점검항목에 매핑된 chunk 정보
+            - `chunk [str]`: 해당 checklist에 매핑된 chunk
+            - `reason [list]`: 해당 checklist에 chunk가 매핑된 이유
+            - `page [Optional[int]]`: 해당 chunk의 page 정보 (pdf 외에는 다른 확장자는 None)
+            - `chunk_idx [str]`: content_position과 매핑된 chunk 위치 id
+        - `content_position [dict]`: 'display_content_data'와 'display_criteria_data' 필드에서 노출되는 chunk와 매핑되는 content
+          - `인덱스`: chunk_idx 
+        - `content [str]`: 전체 문서 내용
+    - `status [str]`: 처리 결과 코드
+    - `msg [str]`: 처리 결과 메세지,
+    - `elapsed_time Optional[float]`: 경과시간
 
-## 📖 사용 방법
-
-### 1️⃣ **문서 업로드**
-- 📁 **파일 업로드**: PDF, HWP, Word, 이미지 파일 드래그 앤 드롭
-- 🌐 **링크 입력**: 웹사이트 URL 붙여넣기
-- ✍️ **텍스트 입력**: 직접 텍스트 작성
-- 🎯 **샘플 파일**: 원클릭으로 테스트 파일 사용
-
-### 2️⃣ **AI 분석 과정**
-1. 📄 **문서 파싱** - 텍스트 추출 및 청킹
-2. 📝 **FAQ 생성** - AI가 자동으로 질문 생성
-3. 📋 **문서 요약** - 핵심 내용 추출
-4. ✅ **완료** - 결과 페이지로 이동
-
-### 3️⃣ **결과 확인**
-- 🔍 **자동 생성된 FAQ** - 문서 기반 질문과 답변
-- 📝 **문서 요약** - 핵심 내용 요약
-- 💬 **스마트 채팅** - 문서 내용 관련 질의응답
-- 🔎 **문서 검색** - 키워드 기반 내용 검색
-
-## 🎯 API 엔드포인트
-
-### **문서 처리 API** (Port: 51037)
-```http
-POST /parse-document-from-url/    # URL 파싱
-POST /parse-document/             # 문서 파싱
-POST /parse-document-hwp/         # HWP 파싱  
-POST /process-image/              # 이미지 처리
-POST /generate-questions/         # 질문 생성
-POST /search/                     # 문서 검색
-```
-
-### **AI 모델 API** (Port: 51036)
-```http
-POST /summarization              # 문서 요약
-POST /intent                     # Intent 분류
-POST /chat                       # 일반 채팅
-```
-
-### **FAQ 답변 API** (Port: 51038)
-```http
-POST /faq_answer_model          # FAQ 답변 생성
-```
-
-## 🔧 개발
-
-### **개발 서버 실행**
-```bash
-npm start                       # localhost:3000에서 실행
-npm test                        # 테스트 실행
-npm run build                   # 프로덕션 빌드
-```
-
-### **코드 구조**
-```
-src/
-├── components/                 # React 컴포넌트
-│   ├── HomePage.tsx           # 메인 페이지
-│   ├── DetailPage.tsx         # 결과 페이지
-│   └── *.css                  # 스타일 시트
-├── services/                  # API 서비스
-│   └── api.ts                 # API 호출 함수들
-├── types/                     # TypeScript 타입 정의
-│   └── index.ts               # 인터페이스 및 타입
-└── setupProxy.js             # 프록시 설정
-```
-
-## 🎨 주요 컴포넌트
-
-### **HomePage** 
-- 📁 파일 업로드 인터페이스
-- 🌐 URL 입력 및 검색
-- ✍️ 텍스트 직접 입력
-- 🎯 샘플 파일 제공
-
-### **DetailPage**
-- 📝 생성된 FAQ 표시
-- 📋 문서 요약 뷰어
-- 💬 채팅 인터페이스
-
-## 🌟 특장점
-
-### ⚡ **빠른 처리 속도**
-- 병렬 API 호출로 처리 시간 단축
-- 청킹 기반 효율적 문서 분석
-
-### 🎯 **높은 정확도**
-- K-Intelligence 엔진 기반 고품질 텍스트 추출
-- Intent 분류를 통한 맞춤형 답변 제공
-
-### 🔧 **확장 가능한 구조**
-- 마이크로서비스 아키텍처
-- 새로운 AI 모델 쉽게 추가 가능
-
-### 🎨 **사용자 중심 설계**
-- 직관적인 드래그 앤 드롭 인터페이스
-- 실시간 피드백 및 진행률 표시
+- 🚨 response parameter 2.0 -> 3.0 변경 사항 (250619)
+  - 'display_data' -> 'data' 인자명 변경 
+    > 기존에는 'display_data' 인자명으로 추론 결과를 전달했습니다. 이번 업데이트에 'display_data' 인자명에서 'data' 인자명으로 변경하였고, 데이터 타입과 내용을 동일합니다.
+    > - 변경 전: 'display_data' 인자명 사용
+    > - 변경 후: 'data' 인자명 사용
+  - 'status' 인자 값 변경
+    > 기존에는 'status'에 200 코드 값을 전달해 모델 api의 성공 여부를 전달 했습니다. 이번 업데이트에 'success' 또는 'error' 값으로 성고 여부를 전달하고, 에러 내용은 'msg' 인자 값으로 확인할 수 있도록 수정하였습니다.
+    > - 변경 전: 'status'인자에 코드 값을 사용해 api 성공 여부 전달
+    > - 변경 후: 'status'인자에 'success' 또는 'error' str 값을 사용해 api 성공 여부 전달
 
 
----
+- 🚨 response parameter 2.0 -> 3.0 변경 사항 (250624)
+  - 'data' -> 'display_content_data', 'display_criteria_data', 'content_position', 'content' 키 확장
+    > 기존에는 content 중심의 추론 결과를 전달했습니다. 이번 업데이트에 'display_content_data', 'display_criteria_data', 'content_position', 'content'로 전달 데이터를 확장하였습니다.
+    > 'display_content_data': content 중심 추론 결과 (as-is)
+    > 'display_criteria_data': checklist 중심 추론 결과
+    > 'content_position': 'display_content_data'와 'display_criteria_data'의 chunk와 매핑된 위치를 알 수 있도록 만든 필드값입니다.
+    > 'content': 전체 content 내용을 str 타입으로 만든 필드값입니다.
+    > - 변경 전: 'data' 인자에 'display_content_data' 데이터 전달
+    > - 변경 후: 'data' 인자의 값을 'display_content_data', 'display_criteria_data', 'content_position', 'content'로 확장해 추가 데이터 전달
 
-<div align="center">
+  - 🚨 response parameter 2.0 -> 3.0 변경 사항 (250625)
+    - 'data' -> 'display_content_data', 'display_criteria_data', 'content_position', 'content' 키 확장
+      > 기존에는 content 중심의 추론 결과를 전달했습니다. 이번 업데이트에 'display_content_data', 'display_criteria_data', 'content_position', 'content'로 전달 데이터를 확장하였습니다.
+      > 'display_content_data': 'index_info' 키를 가지는 딕셔너리들의 리스트에서 chunk 정보들의 리스트로 변경하였습니다.
+      > 'display_criteria_data': '점검항목' 키를 가지는 딕셔너리들의 리스트에서 각 tuple들의 리스트로 변경하였고, 각 tuple의 0번 인덱스 값은 점검항목 내용, 1번 인덱스는 매핑된 chunk 정보입니다.
+      > 'content_position': 'display_content_data'와 'display_criteria_data'의 chunk와 매핑된 위치를 알 수 있도록 만든 필드값입니다.
+      > 'content': 전체 content 내용을 str 타입으로 만든 필드값입니다.
+      > - 변경 전: 'display_content_data', 'display_criteria_data' 모두 이중 리스트 형태
+      > - 변경 후: 'display_content_data', 'display_criteria_data' 모두 단일 리스트로 변경
 
-### 🎉 **공고쉽과 함께 공고 AI 분석을 경험해보세요!**
-
-[![GitHub stars](https://img.shields.io/github/stars/muniv/g?style=social)](https://github.com/muniv/g/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/muniv/g?style=social)](https://github.com/muniv/g/network/members)
-
-</div>
