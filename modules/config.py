@@ -13,8 +13,8 @@ def arg_parse():
     parser.add_argument('--inference_model', default='minkyo95/midm-base-a-model-lora-sft', type=str)
     parser.add_argument('--model_name', default='K-intelligence/Midm-2.0-Base-Instruct', type=str)
 
-    parser.add_argument('--decoder_max_token', default=4096, type=int, help='max input token')
-    parser.add_argument('--generation_max_token', default=512, type=int, help='generation max token')
+    parser.add_argument('--decoder_max_token', default=20240, type=int, help='max input token')
+    parser.add_argument('--generation_max_token', default=20240, type=int, help='generation max token')
     parser.add_argument('--top_p', default=0.8, type=float)
     parser.add_argument('--temperature', default=0.0, type=int)
 

@@ -19,7 +19,7 @@ class InferenceModule(object):
         self.inference_module = LLM(model=inference_model, tokenizer=model_name, tokenizer_mode='auto',
                                     max_model_len=max_model_len, gpu_memory_utilization=gpu_memory_utilization, dtype=torch.float16)
         
-        self.semaphore = asyncio.Semaphore(2)
+        self.semaphore = asyncio.Semaphore(5)
         
         print(f'Inference Module Initialized')
 
