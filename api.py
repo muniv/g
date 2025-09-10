@@ -26,13 +26,6 @@ from modules.utils import are_lists_equal
 
 SOCKET_CONNECTION_TIMEOUT = 5
 
-load_dotenv()
-
-api_key = os.getenv('HF_KEY')
-login(api_key)
-
-app = FastAPI()
-
 args = config.arg_parse()
 
 inference_module = InferenceModule(model_name=args.model_name, max_model_len=args.generation_max_token, gpu_memory_utilization=args.gpu_memory_utilization)
@@ -92,7 +85,6 @@ async def intent_inference(request: IntentRequest, background_tasks: BackgroundT
         context = '문서 없음'
         
     prompt_text = get_prompt('intent')
-    # message = {"role": "system", "content": "당신은 유저의 메세지에 대해 주어진 문서를 참고해 답변할 수 있는지 판단하는 로봇입니다."}
     message = {"role": "system", "content": "당신은 유저의 메세지가 주어진 문서와 연관되어 있으면서 이 문서를 참고해 답변할 수 있는지 판단하는 로봇입니다."}
 
     input_format = inference_module.get_input_format(messages=message, prompt_text=prompt_text, replace_content={'<input_text>': query, '<document_text>': context})
