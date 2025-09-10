@@ -26,16 +26,16 @@ docker run --shm-size="128G" --memory="256G" --cpus=16 -p <port>:80  --name <con
 
 **endpoint 리스트**
 - http://`<host>`:`<port>`/intent
-  > 의도 분류 endpoint
+  > 의도 분류 엔드포인트
   > 햔재 사용자 질의가 문서를 이용해 답변할수 있는 질의인지, 아닌지에 대해 판단하는 endpoint
 - http://`<host>`:`<port>`/easy
-  > 번안 endpoint
+  > 번안 엔드포인트
   > 어려운 단어가 사용된 공문을 쉬운 내용의 공문으로 번안하는 endpoint
 - http://`<host>`:`<port>`/chat
-  > 채팅 endpoint
+  > 채팅 엔드포인트
   > 선택된 문서를 이용해 답변할 수 없는 질의에 대해 대응하는 endpoint
 - http://`<host>`:`<port>`/summarization
-  > 요약 endpoint
+  > 요약 엔드포인트
   > 긴 문서에 대해 핵심적인 내용으로 요약하는 endpoint
 
 **의도분류 엔드포인트 Request**
