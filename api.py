@@ -26,6 +26,8 @@ from modules.utils import are_lists_equal
 
 SOCKET_CONNECTION_TIMEOUT = 5
 
+app = FastAPI()
+
 args = config.arg_parse()
 
 inference_module = InferenceModule(model_name=args.model_name, max_model_len=args.generation_max_token, gpu_memory_utilization=args.gpu_memory_utilization)
