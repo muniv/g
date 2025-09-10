@@ -46,7 +46,6 @@ def read_root():
 async def filtering_health_check():
     return AnswerResponse(status="success", msg="OK", data=None, elapsed_time=None)
 
-
 @app.post('/faq_answer_model', summary="FAQ 답변 모델")
 async def faq_answer_inference(request: AnswerRequest, background_tasks: BackgroundTasks):  
     start_time = time.time()
